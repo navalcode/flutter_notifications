@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "748414331220",
+    "project_id": "flutterpush-996cf",
+    "storage_bucket": "flutterpush-996cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:748414331220:android:69c9af8aebb385843c40c1",
+        "android_client_info": {
+          "package_name": "com.navalcode.babel_push_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkGX_WVXwHv_nxlsKiAY_vtqBnhOFpmBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
