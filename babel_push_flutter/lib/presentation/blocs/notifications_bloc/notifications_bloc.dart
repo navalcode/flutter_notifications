@@ -11,7 +11,7 @@ part 'notifications_state.dart';
 class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  AndroidInitializationSettings androidInitializationSettings = const AndroidInitializationSettings('ic_launcher');
+  AndroidInitializationSettings androidInitializationSettings = const AndroidInitializationSettings("launch_background");
 
 
   NotificationsBloc() : super(const NotificationsState()) {
@@ -44,19 +44,36 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
     print(token);
   }
 
-  void _handleForegroundMessage() {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async{
+void _handleForegroundMessage() {
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+    try {
       print('Got a message whilst in the foreground!');
       print('Message data: ${message.data}');
 
       if (message.notification != null) {
         print('Message also contained a notification: ${message.notification}');
-        var android = const AndroidNotificationDetails('channelId', 'channelName',importance: Importance.max, priority: Priority.high, playSound: true, enableVibration: true);        
+        var android = const AndroidNotificationDetails(
+          'channelId',
+          'channelName',
+          importance: Importance.max,
+          priority: Priority.high,
+          playSound: true,
+          enableVibration: true,
+        );
         var platform = NotificationDetails(android: android);
-        await flutterLocalNotificationsPlugin.show(0, message.notification?.title, message.notification?.body, platform);
+        await flutterLocalNotificationsPlugin.show(
+          0,
+          message.notification?.title,
+          message.notification?.body,
+          platform,
+        );
       }
-    });    
-  }
+    } catch (e) {
+      print('Error handling foreground message: $e');
+    }
+  });
+}
+
 
   void _initializeLocalNotificationsSettings() async {
     var initializationSettings = InitializationSettings(android: androidInitializationSettings);
